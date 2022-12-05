@@ -1,0 +1,10 @@
+Resources:
+https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html 
+
+Navigating 3D Matplotlib:
+- right click + drag to zoom in/out
+- option + click + drag to shift
+
+Project notes/ideas:
+- Since the resulting piecewise vector function is continuous and differentiable, might as well examine the curvature of the
+function and change the color of the sections with the highest curvature (the hardest curves to navigate on the circuit!)
