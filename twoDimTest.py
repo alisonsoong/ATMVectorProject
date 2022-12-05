@@ -3,7 +3,6 @@ import math
 import time
 import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
-from mpl_toolkits import mplot3d
 import random
 
 class CONST:
@@ -36,11 +35,11 @@ def test3D():
 class VectorFunc:
     """ Represents a randomized 2D function given starting point, direction, type of function, and domain """
 
-    def __init__(self, type:int, point:tuple, dir:tuple, domain:list, ts:tuple):
+    def __init__(self, curveType:int, point:tuple, dir:tuple, domain:list, ts:tuple):
         """_summary_
 
         Args:
-            type (int): type of curve (use constants)
+            curveType (int): type of curve (use constants)
             point (tuple): start point
             dir (tuple): start direction
             domain (np list): points to feed functions
@@ -56,7 +55,10 @@ class VectorFunc:
         self.xp, self.yp = dir # start direction
         self.ti, self.tf = ts # start and end t
         self.domain = domain
-        match type:
+        self.curveType = curveType
+    
+    def Gen(self):
+        match self.curveType:
             case CONST.POLY_DEG_1_2D:
                 return 0 #self.PolyDeg_1_2D()
             case CONST.POLY_DEG_2_2D: 
@@ -79,7 +81,7 @@ class VectorFunc:
         a = xp
         if t != 0: c = yp/(2*t)
         else: # t is zero, you can do whatever you want
-            c = random.randint(-RAND.SCALE_FACTOR,RAND.SCALE_FACTOR)
+            c = 1 # try 1 for now # random.randint(-RAND.SCALE_FACTOR,RAND.SCALE_FACTOR) 
         b = x-a*t
         d = y-c*pow(t,2)
 
@@ -88,6 +90,7 @@ class VectorFunc:
 
         endpoint = (a*self.tf+b, c*pow(self.tf, 2)+d)
         enddir = (a,2*c*self.tf)
+        print(xline,yline,endpoint,enddir)
         return xline, yline, endpoint, enddir
 
 
@@ -122,6 +125,25 @@ class ZFuncGen:
     def __init__(self):
         print("Blah")
 
+def firstTest():
+    """
+    From a parabola to a cubic polynomial
+    """
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+    ax = plt.axes(projection='3d')
+
+    zline = np.linspace(0, 5, 1000)
+    # try from a 2d parabola to a 3d
+    curve = VectorFunc(CONST.POLY_DEG_2_2D, (0,0), (1,0), zline, (0,5))
+    xline, yline, endpoint, enddir = curve.Gen()
+    ax.plot3D(xline, yline, 1, 'orange')
+    
+    zline = np.linspace(5, 10, 1000)
+    curve = VectorFunc(CONST.POLY_DEG_3_2D, endpoint, enddir, zline, (5,10))
+    xline, yline, endpoint, enddir = curve.Gen()
+    ax.plot3D(xline, yline, 1, 'gray')
+    plt.show()
 
 class GenFullList:
     def __init__(self, type:int, point:list=(0,0)):
@@ -131,6 +153,7 @@ class GenFullList:
         return 0, 0 # return xLine, yLine
 
 def main():
-    test3D() # testing 3D
+    #test3D() # testing 3D matplotlib 
+    firstTest() # first junction made!
 
 main()
