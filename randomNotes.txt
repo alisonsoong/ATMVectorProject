@@ -1,5 +1,6 @@
 Resources:
-https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html 
+- https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html 
+- https://stackoverflow.com/questions/15617207/line-colour-of-3d-parametric-curve-in-pythons-matplotlib-pyplot
 
 Navigating 3D Matplotlib:
 - right click + drag to zoom in/out

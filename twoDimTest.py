@@ -81,7 +81,7 @@ class VectorFunc:
         a = xp
         if t != 0: c = yp/(2*t)
         else: # t is zero, you can do whatever you want
-            c = 1 # try 1 for now # random.randint(-RAND.SCALE_FACTOR,RAND.SCALE_FACTOR) 
+            c = random.randint(-RAND.SCALE_FACTOR,RAND.SCALE_FACTOR) 
         b = x-a*t
         d = y-c*pow(t,2)
 
@@ -90,7 +90,7 @@ class VectorFunc:
 
         endpoint = (a*self.tf+b, c*pow(self.tf, 2)+d)
         enddir = (a,2*c*self.tf)
-        print(xline,yline,endpoint,enddir)
+        #print(xline,yline,endpoint,enddir)
         return xline, yline, endpoint, enddir
 
 
@@ -137,12 +137,12 @@ def firstTest():
     # try from a 2d parabola to a 3d
     curve = VectorFunc(CONST.POLY_DEG_2_2D, (0,0), (1,0), zline, (0,5))
     xline, yline, endpoint, enddir = curve.Gen()
-    ax.plot3D(xline, yline, 1, 'orange')
+    ax.plot3D(xline, yline, np.sin(zline), 'orange')
     
     zline = np.linspace(5, 10, 1000)
     curve = VectorFunc(CONST.POLY_DEG_3_2D, endpoint, enddir, zline, (5,10))
     xline, yline, endpoint, enddir = curve.Gen()
-    ax.plot3D(xline, yline, 1, 'gray')
+    ax.plot3D(xline, yline, np.sin(zline), 'gray')
     plt.show()
 
 class GenFullList:
