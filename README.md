@@ -3,9 +3,15 @@
 # Proposal:
 A piecewise vector function generator to create new Mario Kart circuits. Given the number of unique sections (curves), the generator should piece together randomized vector functions to create a single continuous and differentiable vector function. Users should be able to indicate how many curves of each type they want in the randomized circuit. Finally, there should be an option to export a circuit and redraw it later in 3D.
 # Things to tackle:
-- [ ] Test concept with 2D vector functions, graph w/ program
+- [x] Test concept with 2D vector functions, graph w/ program
 - [ ] Apply to 3D, graph w/ new program (library?)
 - [ ] CAD model?
+# Progress
+## Monday, December 5
+Finished implementing test case: parabola (in orange) to cubic polynomial (gray)
+![Just xline and yline](https://github.com/alisonsoong/ATMVectorProject/blob/main/GeneratedGraphs/InitialTestGraphs/FirstJunctionProjection.png)
+
+
 
 
 
