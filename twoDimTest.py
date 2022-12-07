@@ -127,9 +127,9 @@ class ZFuncGen:
         self.deg = deg
         self.trig = [bool(random.randint(0,1) == 1) for i in range(deg)] # type of trig function (sin or cos)
         self.a = [5*(random.random()+1) for i in range(deg)]
-        self.b = [5*(random.random()+1) for i in range(deg)]
-        self.c = [5*(random.random()+1) for i in range(deg)]
-        self.d = [5*(random.random()+1) for i in range(deg)]
+        self.b = [(random.random()+1) for i in range(deg)]
+        self.c = [3*(random.random()+1) for i in range(deg)]
+        self.d = [3*(random.random()+1) for i in range(deg)]
         # a*cos(b*(t+c))+d OR a*sin(b*(t+c))+d
         print("Blah")
 
@@ -145,8 +145,29 @@ class ZFuncGen:
 
 class GenCircuit:
 
-    def __init__(self):
-        print("BLAHH")
+    def __init__(self, numPieces:int, deg:int):
+
+        fig = plt.figure()
+        ax = plt.axes(projection='3d')
+        ax = plt.axes(projection='3d')
+
+        self.zFunc = ZFuncGen(deg)
+
+        colors = ['gray','orange','blue','red','yellow','purple','green']
+        endpoint = (0,0)
+        enddir = (1,0)
+
+        for i in range(numPieces):
+            zline = np.linspace(5*i, 5*(i+1), 1000)
+            curve = VectorFunc(self.randVectorFunc(), endpoint, enddir, zline, (5*i,5*(i+1)))
+            xline, yline, endpoint, enddir = curve.gen()
+            ax.plot3D(xline, yline, self.zFunc.getWithRange(zline), colors[i%7])
+        
+        plt.show()
+
+    def randVectorFunc(self):
+        return CONST.POLY_DEG_2_2D if bool(random.randint(0,1)) else CONST.POLY_DEG_3_2D
+            
 
 def firstTest():
     """
@@ -171,15 +192,9 @@ def firstTest():
     ax.plot3D(xline, yline, zFunc.getWithRange(zline), 'gray')
     plt.show()
 
-class GenFullList:
-    def __init__(self, type:int, point:list=(0,0)):
-        '''Assumed to start at (0,0)'''
-    
-    def Poly2D(self):
-        return 0, 0 # return xLine, yLine
-
 def main():
     #test3D() # testing 3D matplotlib 
-    firstTest() # first junction made!
+    #firstTest() # first junction made!
+    GenCircuit(10,5)
 
 main()
