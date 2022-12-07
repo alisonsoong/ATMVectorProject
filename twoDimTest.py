@@ -57,18 +57,18 @@ class VectorFunc:
         self.domain = domain
         self.curveType = curveType
     
-    def Gen(self):
+    def gen(self):
         match self.curveType:
             case CONST.POLY_DEG_1_2D:
-                return 0 #self.PolyDeg_1_2D()
+                return 0 #self.polyDeg_1_2D()
             case CONST.POLY_DEG_2_2D: 
-                return self.PolyDeg_2_2D()
+                return self.polyDeg_2_2D()
             case CONST.POLY_DEG_3_2D:
-                return self.PolyDeg_3_2D()
+                return self.polyDeg_3_2D()
             case CONST.POLY_DEG_4_2D:
-                return 0 #self.PolyDeg_4_2D()
+                return 0 #self.polyDeg_4_2D()
 
-    def PolyDeg_2_2D(self):
+    def polyDeg_2_2D(self):
         """In the form:
 
         r(t) = <at+b, ct^2+d>
@@ -94,7 +94,7 @@ class VectorFunc:
         return xline, yline, endpoint, enddir
 
 
-    def PolyDeg_3_2D(self):
+    def polyDeg_3_2D(self):
         """In the form:
 
         r(t) = <at+b, ct^3+d>
@@ -122,27 +122,53 @@ class VectorFunc:
 class ZFuncGen:
     """ Represents the function to generate the 3D 
     """
-    def __init__(self):
+    def __init__(self, deg:int):
+        # configure the function here
+        self.deg = deg
+        self.trig = [bool(random.randint(0,1) == 1) for i in range(deg)] # type of trig function (sin or cos)
+        self.a = [5*(random.random()+1) for i in range(deg)]
+        self.b = [5*(random.random()+1) for i in range(deg)]
+        self.c = [5*(random.random()+1) for i in range(deg)]
+        self.d = [5*(random.random()+1) for i in range(deg)]
+        # a*cos(b*(t+c))+d OR a*sin(b*(t+c))+d
         print("Blah")
+
+    def getWithRange(self, zline):
+        newZLine = self.a[0]*np.sin(self.b[0]*(zline+self.c[0]))+self.d[0]
+        for i in range(1,self.deg):
+            if self.trig[i]: # sin vs cos
+                newZLine += self.a[i]*np.sin(self.b[i]*(zline+self.c[i]))+self.d[i]
+            else:
+                newZLine += self.a[i]*np.cos(self.b[i]*(zline+self.c[i]))+self.d[i]
+        return newZLine
+
+
+class GenCircuit:
+
+    def __init__(self):
+        print("BLAHH")
 
 def firstTest():
     """
     From a parabola to a cubic polynomial
     """
+
     fig = plt.figure()
     ax = plt.axes(projection='3d')
     ax = plt.axes(projection='3d')
 
+    zFunc = ZFuncGen(5)
+
     zline = np.linspace(0, 5, 1000)
     # try from a 2d parabola to a 3d
     curve = VectorFunc(CONST.POLY_DEG_2_2D, (0,0), (1,0), zline, (0,5))
-    xline, yline, endpoint, enddir = curve.Gen()
-    ax.plot3D(xline, yline, np.sin(zline), 'orange')
+    xline, yline, endpoint, enddir = curve.gen()
+    ax.plot3D(xline, yline, zFunc.getWithRange(zline), color='#FFA500') # use this for color instead, and tweak colors this way
     
     zline = np.linspace(5, 10, 1000)
     curve = VectorFunc(CONST.POLY_DEG_3_2D, endpoint, enddir, zline, (5,10))
-    xline, yline, endpoint, enddir = curve.Gen()
-    ax.plot3D(xline, yline, np.sin(zline), 'gray')
+    xline, yline, endpoint, enddir = curve.gen()
+    ax.plot3D(xline, yline, zFunc.getWithRange(zline), 'gray')
     plt.show()
 
 class GenFullList:
