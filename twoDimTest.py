@@ -21,7 +21,6 @@ def test3D():
     """
     fig = plt.figure()
     ax = plt.axes(projection='3d')
-    ax = plt.axes(projection='3d')
 
     # Data for a three-dimensional line
     zline = np.linspace(0, 15, 1000)
@@ -149,7 +148,6 @@ class GenCircuit:
 
         fig = plt.figure()
         ax = plt.axes(projection='3d')
-        ax = plt.axes(projection='3d')
 
         self.zFunc = ZFuncGen(deg)
 
@@ -175,7 +173,6 @@ def firstTest():
     """
 
     fig = plt.figure()
-    ax = plt.axes(projection='3d')
     ax = plt.axes(projection='3d')
 
     zFunc = ZFuncGen(5)
