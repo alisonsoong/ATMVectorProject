@@ -1,3 +1,4 @@
+# NOTE: this file is no longer used
 import numpy as np
 import math
 import time
@@ -130,7 +131,6 @@ class ZFuncGen:
         self.c = [3*(random.random()+1) for i in range(deg)]
         self.d = [3*(random.random()+1) for i in range(deg)]
         # a*cos(b*(t+c))+d OR a*sin(b*(t+c))+d
-        print("Blah")
 
     def getWithRange(self, zline):
         newZLine = self.a[0]*np.sin(self.b[0]*(zline+self.c[0]))+self.d[0]
@@ -151,7 +151,7 @@ class GenCircuit:
 
         self.zFunc = ZFuncGen(deg)
 
-        colors = ['gray','orange','blue','red','yellow','purple','green']
+        colors = ['gray','orange','blue','red','yellow','purple','green'] # need to randomize colors differently
         endpoint = (0,0)
         enddir = (1,0)
 
