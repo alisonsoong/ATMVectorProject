@@ -6,10 +6,9 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 - [x] Test concept with 2D vector functions, graph w/ program
 - [x] Apply to 3D
 - [ ] Export and redraw
-- [ ] Add more complex base functions
+- [x] Add more complex base functions
 - [ ] "End" the loop (get back to (0,0,z(0)))
 - [ ] Show curvature with gradient dotted line along curve 
-- [ ] CAD model
 - [ ] Presentation slides
 # Progress
 ## December 13
@@ -19,7 +18,7 @@ Current pushed code is really dead, but the issue is just math.
 
 
 https://user-images.githubusercontent.com/57238372/207484562-4db9969f-58f1-4c14-b45b-e0c4bb6871c1.mp4
-
+Yeah, the directions aren't correct for sure ^^
 
 ## Thursday, December 7
 Circuit generator created! Randomized z func generator as well using shifted/scaled sin and cos functions. Also, only deg 2 and deg 3 polynomials used for now.
