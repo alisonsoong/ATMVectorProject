@@ -16,7 +16,11 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 First loop! However, directions don't seem to align. Will have to check calculations + verify the start and end positions/directions for each function...
 Current pushed code is really dead, but the issue is just math.
 ![loop](https://github.com/alisonsoong/ATMVectorProject/blob/main/GeneratedGraphs/12_13_22/Loop.png)
-https://user-images.githubusercontent.com/57238372/207484248-85e4ad39-83f9-4841-bb39-5e6999c1972c.mov
+
+
+https://user-images.githubusercontent.com/57238372/207484562-4db9969f-58f1-4c14-b45b-e0c4bb6871c1.mp4
+
+
 ## Thursday, December 7
 Circuit generator created! Randomized z func generator as well using shifted/scaled sin and cos functions. Also, only deg 2 and deg 3 polynomials used for now.
 ### all put together!
