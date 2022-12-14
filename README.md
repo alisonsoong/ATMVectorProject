@@ -18,6 +18,7 @@ Current pushed code is really dead, but the issue is just math.
 
 
 https://user-images.githubusercontent.com/57238372/207484562-4db9969f-58f1-4c14-b45b-e0c4bb6871c1.mp4
+
 Yeah, the directions aren't correct for sure ^^
 
 ## Thursday, December 7
