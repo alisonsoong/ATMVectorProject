@@ -193,50 +193,6 @@ class VectorFunc:
         print("start direction: ", (-1.5*a*np.sin(1.5*t), c*(-1.5*np.sin(1.5*t)*np.sin(t) + np.cos(1.5*t)*np.cos(t))))
         return xline, yline, endpoint, enddir
     
-    def sinSqrPlusCos(self):
-        """In the form:
-
-        r(t) = <at + b, c*sin^2(t) + d*cos(t)>
-
-        Returns:
-            np list: xline, yline, endpoint, enddir
-        """
-        t,x,xp,y,yp = self.ti,self.x,self.xp,self.y,self.yp
-        
-        # redo this
-        a = xp
-        b = x-a*t
-        try:
-            if t==0:
-                print("SWITCH")
-                return self.polyDeg_3_2D()
-            
-            c = (yp + y*np.tan(t)) / (np.sin(2*t) + np.tan(t) * np.sin(t) *np.sin(t))
-            d = (y-c*np.sin(t)*np.sin(t)) / (np.cos(t))
-
-            if abs((c * np.power(np.sin(t), 2) + d * np.cos(t)) - y) > 1 or abs((c*np.sin(t*2)-d*np.sin(t)) - yp) > 1:
-                d = (2*y-yp*np.tan(t))/(np.tan(t)*np.cos(t) + 2*np.cos(t))#(y-yp/np.sin(2*t))/(1/(2*np.cos(t)) + np.cos(t))# (y-np.tan(t)*yp)/(np.tan(t)*np.sin(t) + np.cos(t))# (4*y-np.tan(t))/(np.tan(t)*np.sin(t) + 4*np.cos(t))
-                c = (yp + d*np.sin(t))/(2*np.sin(t)*np.cos(t)) 
-            
-            if abs((c * np.power(np.sin(t), 2) + d * np.cos(t)) - y) > 1 or abs((c*np.sin(t*2)-d*np.sin(t)) - yp) > 1:
-                print("SWITCH")
-                return self.polyDeg_3_2D()
-        except: 
-            # if it doesn't work, just use another one
-            print("SWITCH")
-            return self.polyDeg_3_2D()
-
-        xline = a * self.domain + b
-        yline = c * np.power(np.sin(self.domain), 2) + d * np.cos(self.domain) # now correct!
-
-        endpoint = (a * self.tf + b, c * np.power(np.sin(self.tf), 2) + d * np.cos(self.tf))
-        enddir = (a,c*np.sin(self.tf*2)-d*np.sin(self.tf))
-        print("curve", t)
-        print(a,b,c,d)
-        print("calculated start point: ", (a * t + b, c * np.power(np.sin(t), 2) + d * np.cos(t)))
-        print("calculated start direction: ", (a,c*np.sin(t*2)-d*np.sin(t)))
-        return xline, yline, endpoint, enddir
-    
     def sinCos(self):
         """In the form:
 
