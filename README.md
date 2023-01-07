@@ -18,10 +18,15 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 Finished implementing the three complex loops. Final list of loops:
 
 r(t) = <at^2 + b, ct^2 + d>
+
 r(t) = <at^2 + b, ct^3 + d>
-r(t) = <a*cos(1.5*t) + b, c*cos(1.5*t)*sin(t) + d>
-r(t) = <at + b, c*sin^2(t) + d*cos(t)>
-r(t) = <at + b, c*sin(t)*cos(t) + d>
+
+r(t) = <acos(1.5t) + b, ccos(1.5t)sin(t) + d>
+
+r(t) = <at + b, csin^2(t) + dcos(t)>
+
+r(t) = <at + b, csin(t)cos(t) + d>
+
 
 
 
