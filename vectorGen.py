@@ -79,7 +79,7 @@ class VectorFunc:
         endpoint = (a*pow(self.tf, 2)+b, c*pow(self.tf, 2)+d)
         enddir = (2*a*self.tf,2*c*self.tf)
         #print(xline,yline,endpoint,enddir)
-        print("deg 2")
+        print("type of curve used: deg 2 poly curve. t val: ", t)
         print("calculated start point: ", (a*pow(t, 2)+b, c*pow(t, 2)+d))
         print("calculated start direction: ", (2*a*t,2*c*t))
         return xline, yline, endpoint, enddir
@@ -109,7 +109,7 @@ class VectorFunc:
 
         endpoint = (a*pow(self.tf, 2)+b, c*pow(self.tf, 3)+d)
         enddir = (a*self.tf,3*c*pow(self.tf, 2))
-        print("deg 3")
+        print("type of curve used: deg 3 poly curve. t val: ", t)
         print("calculated start point: ", (a*pow(t, 2)+b, c*pow(t, 3)+d))
         print("calculated start direction: ", (a*2*t,3*c*pow(t, 2)))
         return xline, yline, endpoint, enddir
@@ -152,8 +152,8 @@ class VectorFunc:
 
         endpoint = (a * self.tf + b, c * np.power(np.sin(self.tf), 2) + d * np.cos(self.tf))
         enddir = (a,c*np.sin(self.tf*2)-d*np.sin(self.tf))
-        print("curve", t)
-        print(a,b,c,d)
+        print("type of curve used: sin sq + sin curve. t val: ", t)
+        #print(a,b,c,d)
         print("calculated start point: ", (a * t + b, c * np.power(np.sin(t), 2) + d * np.cos(t)))
         print("calculated start direction: ", (a,c*np.sin(t*2)-d*np.sin(t)))
         return xline, yline, endpoint, enddir
@@ -187,10 +187,10 @@ class VectorFunc:
 
         endpoint = (b+a*np.cos(1.5*self.tf), d+c*np.cos(1.5*self.tf)*np.sin(self.tf))
         enddir = (-1.5*a*np.sin(1.5*self.tf), c*(-1.5*np.sin(1.5*self.tf)*np.sin(self.tf) + np.cos(1.5*self.tf)*np.cos(self.tf)))
-        print("trefoil", t)
-        print(a,b,c,d)
-        print("start point: ", (b+a*np.cos(1.5*t), d+c*np.cos(1.5*t)*np.sin(t)))
-        print("start direction: ", (-1.5*a*np.sin(1.5*t), c*(-1.5*np.sin(1.5*t)*np.sin(t) + np.cos(1.5*t)*np.cos(t))))
+        print("type of curve used: trefoil curve. t val: ", t)
+        #print(a,b,c,d)
+        print("calculated start point: ", (b+a*np.cos(1.5*t), d+c*np.cos(1.5*t)*np.sin(t)))
+        print("calculated start direction: ", (-1.5*a*np.sin(1.5*t), c*(-1.5*np.sin(1.5*t)*np.sin(t) + np.cos(1.5*t)*np.cos(t))))
         return xline, yline, endpoint, enddir
     
     def sinCos(self):
@@ -223,8 +223,8 @@ class VectorFunc:
 
         endpoint = (b+a*self.tf, c*np.sin(self.tf)*np.cos(self.tf) + d)
         enddir = (a, c*(-np.sin(self.tf)*np.sin(self.tf) + np.cos(self.tf)*np.cos(self.tf)))
-        print("sincos curve", t)
-        print(a,b,c,d)
+        print("type of curve used: sincos curve. t val: ", t)
+        #print(a,b,c,d)
         print("calculated start point: ", (b+a*t, c*np.sin(t)*np.cos(t) + d))
         print("calculated start direction: ", (a, c*(-np.sin(t)*np.sin(t) + np.cos(t)*np.cos(t))))
         return xline, yline, endpoint, enddir
@@ -245,16 +245,16 @@ class GenCircuit:
 
         for i in range(numPieces):
             zline = np.linspace(5*i, 5*(i+1), 1000)
-            print("next expected start point: ", endpoint)
-            print("next expected start direction: ", enddir)
-            print(5*i)
+            print("cur color: ", colors[i%len(colors)])
+            print("expected start point: ", endpoint)
+            print("expected start direction: ", enddir)
+            #print(5*i)
             if i==0: type = CONST.SINSQR_PLUS_COS
             else: type = self.randVectorFunc(type)
             curve = VectorFunc(type, endpoint, enddir, zline, (5*i,5*(i+1)))
             xline, yline, endpoint, enddir = curve.gen()
             print("calculated end point: ", endpoint)
-            print("calculated end direction: ", enddir)
-            print("cur color: ", colors[i%len(colors)])
+            print("calculated end direction: ", enddir,"\n")
             ax.plot3D(xline, yline, self.zFunc.getWithRange(zline), colors[i%len(colors)])
 
 
