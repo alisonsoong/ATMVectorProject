@@ -236,7 +236,7 @@ class GenCircuit:
         fig = plt.figure()
         ax = plt.axes(projection='3d')
 
-        self.zFunc = ZFuncGen(deg)
+        self.zFunc = ZFuncGen(deg,(random.randint(5,7),1,random.randint(5,7),random.randint(5,7)))
 
         colors = ['gray','orange','blue','red','purple','green'] # need to randomize colors differently
         endpoint = (0,0)
