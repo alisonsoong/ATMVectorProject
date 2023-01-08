@@ -1,5 +1,7 @@
 # ATMVectorProject:
 [Project Doc](https://docs.google.com/document/d/1fjGd2PhNvcNCRg_KGf5zmZXxd_bmBvlUH75HdrPXgrI/edit?usp=sharing)
+[Presentation Slides] (https://docs.google.com/presentation/d/1Ur9ezw3J4MosY-ePZr4e8VjK5njWWSeI/edit?usp=sharing&ouid=106602010103381896584&rtpof=true&sd=true)
+
 # Proposal:
 A piecewise vector function generator to create new Mario Kart circuits. Given the number of unique sections (curves), the generator should piece together randomized vector functions to create a single continuous and differentiable vector function. Users should be able to indicate how many curves of each type they want in the randomized circuit. Finally, there should be an option to export a circuit and redraw it later in 3D.
 # Things to tackle:
