@@ -85,7 +85,7 @@ class VectorFunc:
 
         endpoint = (a*pow(self.tf, 2)+b, c*pow(self.tf, 2)+d)
         enddir = (2*a*self.tf,2*c*self.tf)
-        #print(xline,yline,endpoint,enddir)
+
         print("type of curve used: deg 2 poly curve. t val: ", t)
         print("calculated start point: ", (a*pow(t, 2)+b, c*pow(t, 2)+d))
         print("calculated start direction: ", (2*a*t,2*c*t))
@@ -160,7 +160,7 @@ class VectorFunc:
             d = (y-c*np.sin(t)*np.sin(t)) / (np.cos(t))
 
             if abs((c * np.power(np.sin(t), 2) + d * np.cos(t)) - y) > 1 or abs((c*np.sin(t*2)-d*np.sin(t)) - yp) > 1:
-                d = (2*y-yp*np.tan(t))/(np.tan(t)*np.cos(t) + 2*np.cos(t))#(y-yp/np.sin(2*t))/(1/(2*np.cos(t)) + np.cos(t))# (y-np.tan(t)*yp)/(np.tan(t)*np.sin(t) + np.cos(t))# (4*y-np.tan(t))/(np.tan(t)*np.sin(t) + 4*np.cos(t))
+                d = (2*y-yp*np.tan(t))/(np.tan(t)*np.cos(t) + 2*np.cos(t))
                 c = (yp + d*np.sin(t))/(2*np.sin(t)*np.cos(t)) 
             
             if abs((c * np.power(np.sin(t), 2) + d * np.cos(t)) - y) > 1 or abs((c*np.sin(t*2)-d*np.sin(t)) - yp) > 1:
@@ -286,7 +286,7 @@ class GenCircuit:
 
         self.zFunc = ZFuncGen(deg,(random.randint(5,7),1,random.randint(5,7),random.randint(5,7)))
 
-        colors = ['gray','orange','blue','red','purple','green'] # need to randomize colors differently
+        colors = ['gray','orange','blue','red','purple','green']
         endpoint = (0,0)
         enddir = (5,1)
         type = -1
@@ -298,10 +298,11 @@ class GenCircuit:
 
         for i in range(numPieces):
             domain = np.linspace(5*i, 5*(i+1), 1000)
+            
             print("cur color: ", colors[i%len(colors)])
             print("expected start point: ", endpoint)
             print("expected start direction: ", enddir)
-            #print(5*i)
+
             if i==0: type = CONST.SINSQR_PLUS_COS
             else: type = self.randVectorFunc(type)
             curve = VectorFunc(type, endpoint, enddir, domain, (5*i,5*(i+1)))
@@ -322,7 +323,7 @@ class GenCircuit:
             print("calculated end direction: ", enddir,"\n")
             ax.plot3D(xline, yline, zline, colors[i%len(colors)])
 
-        colorsMap='OrRd'#'autumn'#'seismic'
+        colorsMap='OrRd' #'autumn'#'seismic'
         cm = plt.get_cmap(colorsMap)
         cNorm = cls.Normalize(vmin=min(cs), vmax=max(cs))
         scalarMap = mpl.cm.ScalarMappable(norm=cNorm, cmap=cm)
@@ -334,15 +335,9 @@ class GenCircuit:
 
     def randVectorFunc(self, prev):
         r = random.random()
-        #type = prev
-        #while (type != prev):
         if (r < 0.3):
             return CONST.SINSQR_PLUS_COS
         elif (r < 0.6):
             return CONST.SIN_COS
         else:
-        #elif (r<0.9):
             return CONST.TREFOIL
-        #else:
-            #return CONST.POLY_DEG_2_2D if bool(random.randint(0,1)) else CONST.POLY_DEG_2_2D
-        #return type

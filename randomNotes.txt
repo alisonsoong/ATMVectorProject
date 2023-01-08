@@ -1,6 +1,7 @@
-Resources:
+Sources:
 - https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html 
 - https://stackoverflow.com/questions/15617207/line-colour-of-3d-parametric-curve-in-pythons-matplotlib-pyplot
+- https://stackoverflow.com/questions/8891994/matplotlib-3d-scatter-plot-with-color-gradient
 
 Navigating 3D Matplotlib:
 - right click + drag to zoom in/out
@@ -8,4 +9,4 @@ Navigating 3D Matplotlib:
 
 Project notes/ideas:
 - Since the resulting piecewise vector function is continuous and differentiable, might as well examine the curvature of the
-function and change the color of the sections with the highest curvature (the hardest curves to navigate on the circuit!)
+function and change the color of the sections with the highest curvature (the most difficult curves to navigate on the circuit!)
