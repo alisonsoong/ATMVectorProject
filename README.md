@@ -6,8 +6,8 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 - [x] Test concept with 2D vector functions, graph w/ program
 - [x] Apply to 3D
 - [x] Add more complex base functions
-- [ ] Show curvature with gradient dotted line along curve 
-- [ ] Presentation slides
+- [x] Show curvature with gradient dotted line along curve 
+- [x] Presentation slides
 
 # Things we ran out of time for:
 - Export and redraw (deemed unecessary)
