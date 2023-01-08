@@ -1,3 +1,4 @@
+from re import I
 import numpy as np
 import random
 
@@ -14,11 +15,41 @@ class ZFuncGen:
         self.d = [scale[3]*(random.random()+1) for i in range(deg)]
         # a*cos(b*(t+c))+d OR a*sin(b*(t+c))+d
 
-    def getWithRange(self, zline):
-        newZLine = self.a[0]*np.sin(self.b[0]*(zline+self.c[0]))+self.d[0]
+    def genZ(self, domain):
+        # seed
+        if self.trig[0]: zline = self.a[0]*np.sin(self.b[0]*(domain+self.c[0]))+self.d[0]
+        else: zline = self.a[0]*np.cos(self.b[0]*(domain+self.c[0]))+self.d[0]
+
         for i in range(1,self.deg):
             if self.trig[i]: # sin vs cos
-                newZLine += self.a[i]*np.sin(self.b[i]*(zline+self.c[i]))+self.d[i]
+                zline += self.a[i]*np.sin(self.b[i]*(domain+self.c[i]))+self.d[i]
             else:
-                newZLine += self.a[i]*np.cos(self.b[i]*(zline+self.c[i]))+self.d[i]
-        return newZLine
+                zline += self.a[i]*np.cos(self.b[i]*(domain+self.c[i]))+self.d[i]
+        return zline
+
+    def genZP(self, domain):
+        if self.trig[0]: zp = self.a[0]*self.b[0]*np.cos(self.b[0]*(domain+self.c[0]))
+        else: zp = -self.a[0]*self.b[0]*np.sin(self.b[0]*(domain+self.c[0]))
+
+        for i in range(1,self.deg):
+            if self.trig[i]: # sin vs cos
+                zp += self.a[i]*self.b[i]*np.cos(self.b[i]*(domain+self.c[i]))
+            else:
+                zp += -self.a[i]*self.b[i]*np.sin(self.b[i]*(domain+self.c[i]))
+        
+        return zp
+
+    def genZPP(self, domain):
+        if self.trig[0]: zpp = -self.a[0]*self.b[0]*self.b[0]*np.sin(self.b[0]*(domain+self.c[0]))
+        else: zpp = -self.a[0]*self.b[0]*self.b[0]*np.cos(self.b[0]*(domain+self.c[0]))
+
+        for i in range(1,self.deg):
+            if self.trig[i]: # sin vs cos
+                zpp += -self.a[i]*self.b[i]*self.b[i]*np.sin(self.b[i]*(domain+self.c[i]))
+            else:
+                zpp += -self.a[i]*self.b[i]*self.b[i]*np.cos(self.b[i]*(domain+self.c[i]))
+
+        return zpp
+
+    def genForCurvature(self, domain):
+        return self.genZ(domain), self.genZP(domain), self.genZPP(domain)

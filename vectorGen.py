@@ -3,6 +3,9 @@ import math
 import time
 import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
+import matplotlib.colors as cls
+import matplotlib as mpl
+import mpl_toolkits.mplot3d as mpl3
 import random
 from zFuncGen import *
 
@@ -41,7 +44,11 @@ class VectorFunc:
         self.domain = domain
         self.curveType = curveType
     
-    def gen(self):
+    def gen(self, z, zp, zpp, curvatureDomain):
+        self.z=z
+        self.zp=zp
+        self.zpp=zpp
+        self.curvatureDomain = curvatureDomain
         match self.curveType:
             case CONST.POLY_DEG_2_2D: 
                 return self.polyDeg_2_2D()
@@ -82,7 +89,16 @@ class VectorFunc:
         print("type of curve used: deg 2 poly curve. t val: ", t)
         print("calculated start point: ", (a*pow(t, 2)+b, c*pow(t, 2)+d))
         print("calculated start direction: ", (2*a*t,2*c*t))
-        return xline, yline, endpoint, enddir
+
+
+        # calculate curvature
+        z,zp,zpp=self.z,self.zp,self.zpp
+        t = self.curvatureDomain
+        xn = a*pow(t, 2)+b
+        yn = c*pow(t, 2)+d
+        csn = t/t
+
+        return xline, yline, endpoint, enddir, xn, yn, csn
 
 
     def polyDeg_3_2D(self):
@@ -112,7 +128,15 @@ class VectorFunc:
         print("type of curve used: deg 3 poly curve. t val: ", t)
         print("calculated start point: ", (a*pow(t, 2)+b, c*pow(t, 3)+d))
         print("calculated start direction: ", (a*2*t,3*c*pow(t, 2)))
-        return xline, yline, endpoint, enddir
+
+        # curvature
+        z,zp,zpp=self.z,self.zp,self.zpp
+        t = self.curvatureDomain
+        xn = a*pow(t, 2)+b
+        yn = c*pow(t, 3)+d
+        csn = t/t
+
+        return xline, yline, endpoint, enddir, xn, yn, csn
 
     def sinSqrPlusCos(self):
         """In the form:
@@ -156,7 +180,15 @@ class VectorFunc:
         #print(a,b,c,d)
         print("calculated start point: ", (a * t + b, c * np.power(np.sin(t), 2) + d * np.cos(t)))
         print("calculated start direction: ", (a,c*np.sin(t*2)-d*np.sin(t)))
-        return xline, yline, endpoint, enddir
+
+        # curvature
+        z,zp,zpp=self.z,self.zp,self.zpp
+        t = self.curvatureDomain
+        xn = a * t + b
+        yn = c * np.power(np.sin(t), 2) + d * np.cos(t)
+        csn = t/t
+
+        return xline, yline, endpoint, enddir, xn, yn, csn
     
     def trefoil(self):
         """In the form:
@@ -191,7 +223,15 @@ class VectorFunc:
         #print(a,b,c,d)
         print("calculated start point: ", (b+a*np.cos(1.5*t), d+c*np.cos(1.5*t)*np.sin(t)))
         print("calculated start direction: ", (-1.5*a*np.sin(1.5*t), c*(-1.5*np.sin(1.5*t)*np.sin(t) + np.cos(1.5*t)*np.cos(t))))
-        return xline, yline, endpoint, enddir
+
+        # curvature
+        z,zp,zpp=self.z,self.zp,self.zpp
+        t = self.curvatureDomain
+        xn = b+a*np.cos(1.5*t)
+        yn = d+c*np.cos(1.5*t)*np.sin(t)
+        csn = t/t
+
+        return xline, yline, endpoint, enddir, xn, yn, csn
     
     def sinCos(self):
         """In the form:
@@ -227,7 +267,15 @@ class VectorFunc:
         #print(a,b,c,d)
         print("calculated start point: ", (b+a*t, c*np.sin(t)*np.cos(t) + d))
         print("calculated start direction: ", (a, c*(-np.sin(t)*np.sin(t) + np.cos(t)*np.cos(t))))
-        return xline, yline, endpoint, enddir
+
+        # curvature
+        z,zp,zpp=self.z,self.zp,self.zpp
+        t = self.curvatureDomain
+        xn = b+a*t
+        yn = c*np.sin(t)*np.cos(t) + d
+        csn = np.sqrt(pow((a*zpp*c*(-np.sin(t)*np.sin(t) + np.cos(t)*np.cos(t)) + 4*zp*c*np.cos(t)*np.sin(t)),2) + pow(-a*zpp,2) + pow(-4*a*c*np.cos(t)*np.sin(t), 2)) / (pow(np.sqrt(a*a+c*c*pow(-np.sin(t)*np.sin(t)+np.cos(t)*np.cos(t),2) + zp*zp),3))
+
+        return xline, yline, endpoint, enddir, xn, yn, csn
 
 class GenCircuit:
 
@@ -240,24 +288,48 @@ class GenCircuit:
 
         colors = ['gray','orange','blue','red','purple','green'] # need to randomize colors differently
         endpoint = (0,0)
-        enddir = (1,1)
+        enddir = (5,1)
         type = -1
 
+        x=np.array([0])
+        y=np.array([0])
+        z=np.array([0])
+        cs=np.array([0])
+
         for i in range(numPieces):
-            zline = np.linspace(5*i, 5*(i+1), 1000)
+            domain = np.linspace(5*i, 5*(i+1), 1000)
             print("cur color: ", colors[i%len(colors)])
             print("expected start point: ", endpoint)
             print("expected start direction: ", enddir)
             #print(5*i)
             if i==0: type = CONST.SINSQR_PLUS_COS
             else: type = self.randVectorFunc(type)
-            curve = VectorFunc(type, endpoint, enddir, zline, (5*i,5*(i+1)))
-            xline, yline, endpoint, enddir = curve.gen()
+            curve = VectorFunc(type, endpoint, enddir, domain, (5*i,5*(i+1)))
+
+            zline = self.zFunc.genZ(domain)
+
+            curvatureDomain = np.linspace(5*i, 5*(i+1), 25)
+            zn, zp, zpp = self.zFunc.genForCurvature(curvatureDomain)
+
+            xline, yline, endpoint, enddir, xn, yn, csn = curve.gen(zn, zp, zpp, curvatureDomain)
+            x=np.concatenate((x,xn))
+            y=np.concatenate((y,yn))
+            z=np.concatenate((z,zn))
+            cs=np.concatenate((cs,csn))
+            #print(x,y,z,csn)
+
             print("calculated end point: ", endpoint)
             print("calculated end direction: ", enddir,"\n")
-            ax.plot3D(xline, yline, self.zFunc.getWithRange(zline), colors[i%len(colors)])
+            ax.plot3D(xline, yline, zline, colors[i%len(colors)])
 
-
+        colorsMap='OrRd'#'autumn'#'seismic'
+        cm = plt.get_cmap(colorsMap)
+        cNorm = cls.Normalize(vmin=min(cs), vmax=max(cs))
+        scalarMap = mpl.cm.ScalarMappable(norm=cNorm, cmap=cm)
+        ax.scatter(x, y, z, c=scalarMap.to_rgba(cs))
+        scalarMap.set_array(cs)
+        fig.colorbar(scalarMap)
+    
         plt.show()
 
     def randVectorFunc(self, prev):
