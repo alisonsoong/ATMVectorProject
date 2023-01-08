@@ -5,12 +5,36 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 # Things to tackle:
 - [x] Test concept with 2D vector functions, graph w/ program
 - [x] Apply to 3D
-- [ ] Export and redraw
 - [x] Add more complex base functions
-- [ ] "End" the loop (get back to (0,0,z(0)))
 - [ ] Show curvature with gradient dotted line along curve 
 - [ ] Presentation slides
+
+# Things we ran out of time for:
+- Export and redraw (deemed unecessary)
+- "End" the loop (get back to (0,0,z(0))) -> ran out of time to implement in code, but should be in presentation?
+
 # Progress
+## January 7
+Finished implementing the three complex loops. Final list of loops:
+
+r(t) = <at^2 + b, ct^2 + d>
+
+r(t) = <at^2 + b, ct^3 + d>
+
+r(t) = <acos(1.5t) + b, ccos(1.5t)sin(t) + d>
+
+r(t) = <at + b, csin^2(t) + dcos(t)>
+
+r(t) = <at + b, csin(t)cos(t) + d>
+
+
+
+
+https://user-images.githubusercontent.com/57238372/211143363-37abdfa8-7116-4bb7-80bc-b032ec4230ac.mov
+
+
+
+
 ## December 13
 First loop! However, directions don't seem to align. Will have to check calculations + verify the start and end positions/directions for each function...
 Current pushed code is really dead, but the issue is just math.
