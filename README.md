@@ -14,6 +14,16 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 - "End" the loop (get back to (0,0,z(0))) -> ran out of time to implement in code, but should be in presentation?
 
 # Progress
+## January 7 (but at night, ha)
+Finished implementing all curvature! Here is the final product:
+
+<img width="708" alt="Curvature" src="https://user-images.githubusercontent.com/57238372/211185428-45538e56-dc59-47c4-9dba-19d2e1faed58.png">
+
+
+https://user-images.githubusercontent.com/57238372/211185432-bc7a6803-2b3f-4359-8684-5bcc2f372dd8.mov
+
+
+
 ## January 7
 Finished implementing the three complex loops. Final list of loops:
 
