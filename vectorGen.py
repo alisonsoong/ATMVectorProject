@@ -273,7 +273,13 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = b+a*t
         yn = c*np.sin(t)*np.cos(t) + d
-        csn = np.sqrt(pow((a*zpp*c*(-np.sin(t)*np.sin(t) + np.cos(t)*np.cos(t)) + 4*zp*c*np.cos(t)*np.sin(t)),2) + pow(-a*zpp,2) + pow(-4*a*c*np.cos(t)*np.sin(t), 2)) / (pow(np.sqrt(a*a+c*c*pow(-np.sin(t)*np.sin(t)+np.cos(t)*np.cos(t),2) + zp*zp),3))
+        xp = a*t/t
+        xpp = 0*t/t
+        yp = c*(np.cos(t)*np.cos(t) - np.sin(t)*np.sin(t))
+        ypp = -2*c*np.sin(t)*np.cos(t) - 2*c*np.sin(t)*np.cos(t)
+
+        csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
+        #csn = np.sqrt(pow((a*zpp*c*(-np.sin(t)*np.sin(t) + np.cos(t)*np.cos(t)) + 4*zp*c*np.cos(t)*np.sin(t)),2) + pow(-a*zpp,2) + pow(-4*a*c*np.cos(t)*np.sin(t), 2)) / (pow(np.sqrt(a*a+c*c*pow(-np.sin(t)*np.sin(t)+np.cos(t)*np.cos(t),2) + zp*zp),3))
 
         return xline, yline, endpoint, enddir, xn, yn, csn
 
@@ -309,7 +315,7 @@ class GenCircuit:
 
             zline = self.zFunc.genZ(domain)
 
-            curvatureDomain = np.linspace(5*i, 5*(i+1), 25)
+            curvatureDomain = np.linspace(5*i, 5*(i+1), 40)
             zn, zp, zpp = self.zFunc.genForCurvature(curvatureDomain)
 
             xline, yline, endpoint, enddir, xn, yn, csn = curve.gen(zn, zp, zpp, curvatureDomain)
