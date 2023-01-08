@@ -96,7 +96,13 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = a*pow(t, 2)+b
         yn = c*pow(t, 2)+d
-        csn = t/t
+        
+        xp = a*t
+        xpp = a*t/t
+        yp = c*t
+        ypp = c*t/t
+
+        csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
 
         return xline, yline, endpoint, enddir, xn, yn, csn
 
@@ -134,8 +140,14 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = a*pow(t, 2)+b
         yn = c*pow(t, 3)+d
-        csn = t/t
 
+        xp = a*t
+        xpp = a*t/t
+        yp = c*pow(t, 2)
+        ypp = c*t
+
+        csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
+        
         return xline, yline, endpoint, enddir, xn, yn, csn
 
     def sinSqrPlusCos(self):
@@ -186,8 +198,14 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = a * t + b
         yn = c * np.power(np.sin(t), 2) + d * np.cos(t)
-        csn = t/t
+        
+        xp = a * t/t
+        xpp = 0
+        yp = 2*c*np.sin(t)*np.cos(t) - d*np.sin(t)
+        ypp = 2*c*(np.cos(t)*np.cos(t)-np.sin(t)*np.sin(t)) - d*np.cos(t)
 
+        csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
+        
         return xline, yline, endpoint, enddir, xn, yn, csn
     
     def trefoil(self):
@@ -229,7 +247,13 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = b+a*np.cos(1.5*t)
         yn = d+c*np.cos(1.5*t)*np.sin(t)
-        csn = t/t
+        
+        xp = -1.5*a*np.sin(1.5*t)
+        xpp = -1.5*1.5*a*np.cos(1.5*t)
+        yp = c*(-1.5*np.sin(1.5*t)*np.sin(t) + np.cos(1.5*t)*np.cos(t))
+        ypp = c*(-1.5*1.5*np.cos(1.5*t)*np.sin(t) - 1.5*np.sin(1.5*t)*np.cos(t)) + c*(-1.5*np.sin(1.5*t)*np.cos(t) - np.cos(1.5*t)*np.sin(t))
+
+        csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
 
         return xline, yline, endpoint, enddir, xn, yn, csn
     
@@ -331,9 +355,9 @@ class GenCircuit:
 
         colorsMap='OrRd' #'autumn'#'seismic'
         cm = plt.get_cmap(colorsMap)
-        cNorm = cls.Normalize(vmin=min(cs), vmax=max(cs))
+        cNorm = cls.LogNorm()#cls.Normalize(vmin=min(cs), vmax=max(cs))
         scalarMap = mpl.cm.ScalarMappable(norm=cNorm, cmap=cm)
-        ax.scatter(x, y, z, c=scalarMap.to_rgba(cs))
+        ax.scatter(x, y, z, c=scalarMap.to_rgba(cs), norm=mpl.colors.LogNorm())
         scalarMap.set_array(cs)
         fig.colorbar(scalarMap)
     
