@@ -1,6 +1,6 @@
 from vectorGen import *
 
 def main():
-    GenCircuit(10,5)
+    GenCircuit(6,5)
 
 main()

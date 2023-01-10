@@ -98,9 +98,9 @@ class VectorFunc:
         yn = c*pow(t, 2)+d
         
         xp = a*t
-        xpp = a*t/t
+        xpp = a*(t/t)
         yp = c*t
-        ypp = c*t/t
+        ypp = c*(t/t)
 
         csn = np.sqrt(np.power(np.multiply(yp, zpp) - np.multiply(ypp, zp),2) + np.power(np.multiply(xpp, zp) - np.multiply(xp, zpp),2) + np.power(np.multiply(xp, ypp) - np.multiply(xpp, yp),2)) / np.power(np.sqrt( np.power(xp,2) + np.power(yp,2) + np.power(zp,2) ),3)
 
@@ -142,7 +142,7 @@ class VectorFunc:
         yn = c*pow(t, 3)+d
 
         xp = a*t
-        xpp = a*t/t
+        xpp = a*(t/t)
         yp = c*pow(t, 2)
         ypp = c*t
 
@@ -199,7 +199,7 @@ class VectorFunc:
         xn = a * t + b
         yn = c * np.power(np.sin(t), 2) + d * np.cos(t)
         
-        xp = a * t/t
+        xp = a * (t/t)
         xpp = 0
         yp = 2*c*np.sin(t)*np.cos(t) - d*np.sin(t)
         ypp = 2*c*(np.cos(t)*np.cos(t)-np.sin(t)*np.sin(t)) - d*np.cos(t)
@@ -297,8 +297,8 @@ class VectorFunc:
         t = self.curvatureDomain
         xn = b+a*t
         yn = c*np.sin(t)*np.cos(t) + d
-        xp = a*t/t
-        xpp = 0*t/t
+        xp = a*(t/t)
+        xpp = 0*(t/t)
         yp = c*(np.cos(t)*np.cos(t) - np.sin(t)*np.sin(t))
         ypp = -2*c*np.sin(t)*np.cos(t) - 2*c*np.sin(t)*np.cos(t)
 
@@ -317,47 +317,55 @@ class GenCircuit:
         self.zFunc = ZFuncGen(deg,(random.randint(5,7),1,random.randint(5,7),random.randint(5,7)))
 
         colors = ['gray','orange','blue','red','purple','green']
-        endpoint = (0,0)
-        enddir = (5,1)
-        type = -1
-
-        x=np.array([0])
-        y=np.array([0])
-        z=np.array([0])
-        cs=np.array([0])
-
-        for i in range(numPieces):
-            domain = np.linspace(5*i, 5*(i+1), 1000)
+        
+        finished = True
+        while True:
+            endpoint = (0,0)
+            enddir = (5,1)
+            type = -1
             
-            print("cur color: ", colors[i%len(colors)])
-            print("expected start point: ", endpoint)
-            print("expected start direction: ", enddir)
+            x=np.array([0])
+            y=np.array([0])
+            z=np.array([0])
+            cs=np.array([0])
+            for i in range(numPieces):
+                domain = np.linspace(5*i, 5*(i+1), 1000)
+                
+                print("cur color: ", colors[i%len(colors)])
+                print("expected start point: ", endpoint)
+                print("expected start direction: ", enddir)
 
-            if i==0: type = CONST.SINSQR_PLUS_COS
-            else: type = self.randVectorFunc(type)
-            curve = VectorFunc(type, endpoint, enddir, domain, (5*i,5*(i+1)))
+                if i==0: type = CONST.SINSQR_PLUS_COS
+                else: type = self.randVectorFunc(type)
+                curve = VectorFunc(type, endpoint, enddir, domain, (5*i,5*(i+1)))
 
-            zline = self.zFunc.genZ(domain)
+                zline = self.zFunc.genZ(domain)
 
-            curvatureDomain = np.linspace(5*i, 5*(i+1), 40)
-            zn, zp, zpp = self.zFunc.genForCurvature(curvatureDomain)
+                curvatureDomain = np.linspace(5*i, 5*(i+1), 40)
+                zn, zp, zpp = self.zFunc.genForCurvature(curvatureDomain)
 
-            xline, yline, endpoint, enddir, xn, yn, csn = curve.gen(zn, zp, zpp, curvatureDomain)
-            x=np.concatenate((x,xn))
-            y=np.concatenate((y,yn))
-            z=np.concatenate((z,zn))
-            cs=np.concatenate((cs,csn))
-            #print(x,y,z,csn)
+                xline, yline, endpoint, enddir, xn, yn, csn = curve.gen(zn, zp, zpp, curvatureDomain)
+                x=np.concatenate((x,xn))
+                y=np.concatenate((y,yn))
+                z=np.concatenate((z,zn))
+                cs=np.concatenate((cs,csn))
+                #print(x,y,z,csn)
 
-            print("calculated end point: ", endpoint)
-            print("calculated end direction: ", enddir,"\n")
-            ax.plot3D(xline, yline, zline, colors[i%len(colors)])
+                print("calculated end point: ", endpoint)
+                print("calculated end direction: ", enddir,"\n")
+                ax.plot3D(xline, yline, zline, colors[i%len(colors)])
+                
+                if (enddir[0] == 0 or enddir[1] == 0):
+                    finished = False
+                    break
+            if finished: break
+            else: finished = True
 
         colorsMap='OrRd' #'autumn'#'seismic'
         cm = plt.get_cmap(colorsMap)
         cNorm = cls.LogNorm()#cls.Normalize(vmin=min(cs), vmax=max(cs))
         scalarMap = mpl.cm.ScalarMappable(norm=cNorm, cmap=cm)
-        ax.scatter(x, y, z, c=scalarMap.to_rgba(cs), norm=mpl.colors.LogNorm())
+        ax.scatter(x, y, z, c=scalarMap.to_rgba(cs))#, norm=mpl.colors.LogNorm())
         scalarMap.set_array(cs)
         fig.colorbar(scalarMap)
     
