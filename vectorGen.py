@@ -311,8 +311,6 @@ class GenCircuit:
 
     def __init__(self, numPieces:int, deg:int):
 
-        fig = plt.figure()
-        ax = plt.axes(projection='3d')
 
         self.zFunc = ZFuncGen(deg,(random.randint(5,7),1,random.randint(5,7),random.randint(5,7)))
 
@@ -320,6 +318,9 @@ class GenCircuit:
         
         finished = True
         while True:
+            fig = plt.figure()
+            ax = plt.axes(projection='3d')
+
             endpoint = (0,0)
             enddir = (5,1)
             type = -1
@@ -356,6 +357,7 @@ class GenCircuit:
                 ax.plot3D(xline, yline, zline, colors[i%len(colors)])
                 
                 if (enddir[0] == 0 or enddir[1] == 0):
+                    plt.close()
                     finished = False
                     break
             if finished: break
