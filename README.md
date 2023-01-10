@@ -1,5 +1,8 @@
 # ATMVectorProject:
 [Project Doc](https://docs.google.com/document/d/1fjGd2PhNvcNCRg_KGf5zmZXxd_bmBvlUH75HdrPXgrI/edit?usp=sharing)
+
+[Presentation Slides](https://docs.google.com/presentation/d/1Ur9ezw3J4MosY-ePZr4e8VjK5njWWSeI/edit?usp=sharing&ouid=106602010103381896584&rtpof=true&sd=true)
+
 # Proposal:
 A piecewise vector function generator to create new Mario Kart circuits. Given the number of unique sections (curves), the generator should piece together randomized vector functions to create a single continuous and differentiable vector function. Users should be able to indicate how many curves of each type they want in the randomized circuit. Finally, there should be an option to export a circuit and redraw it later in 3D.
 # Things to tackle:
@@ -14,6 +17,16 @@ A piecewise vector function generator to create new Mario Kart circuits. Given t
 - "End" the loop (get back to (0,0,z(0))) -> ran out of time to implement in code, but should be in presentation?
 
 # Progress
+## January 7 (but at night, ha)
+Finished implementing all curvature! Here is the final product:
+
+<img width="708" alt="Curvature" src="https://user-images.githubusercontent.com/57238372/211185428-45538e56-dc59-47c4-9dba-19d2e1faed58.png">
+
+
+https://user-images.githubusercontent.com/57238372/211185432-bc7a6803-2b3f-4359-8684-5bcc2f372dd8.mov
+
+
+
 ## January 7
 Finished implementing the three complex loops. Final list of loops:
 
